@@ -1,23 +1,20 @@
 const mongoose = require("mongoose");
 
-const registrationSchema = mongoose.Schema(
+const adminSchema = mongoose.Schema(
   {
-    email: {
+    registration: {
       type: String,
       required: true,
       unique: true,
     },
-    coursename: {
+    cname: {
       type: String,
       required: true,
     },
-    phonenumber: {
+    subject: {
       type: String,
       required: true,
-    },
-    dateofbirth: {
-      type: String,
-      required: true,
+      unique: true,
     },
   },
   {
@@ -25,4 +22,4 @@ const registrationSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("registrations", registrationSchema);
+module.exports = mongoose.model("admins", adminSchema);
