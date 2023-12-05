@@ -33,7 +33,7 @@ connectionDB();
 
 // Routes
 app.use("/api/student", userRoute);
-app.use("/api/payment", razorRoute);
+// app.use("/api/payment", razorRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/v1/phonepe", phonepeRoute);
 
