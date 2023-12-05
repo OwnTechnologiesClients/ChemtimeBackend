@@ -74,7 +74,7 @@ const checkStatus = async (req, res) => {
       }
     )
     .then(async (response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success === true) {
         const url = `http://localhost:5173/success`;
         return res.redirect(url);

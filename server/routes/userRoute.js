@@ -51,11 +51,11 @@ route.post("/register", upload.single("myFile"), async (req, res) => {
       });
     }
     req.body.myfilename = req.file.filename;
-    console.log(req.body);
+    // console.log(req.body);
     const student = new Student(req.body);
     await student.save();
 
-    console.log("hello")
+    // console.log("hello")
 
     const stud = await Student.findOne({ email: req.body.email });
 
@@ -74,7 +74,7 @@ route.post("/register", upload.single("myFile"), async (req, res) => {
 
 route.post("/free-registration", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const registrationExists = await Registration.findOne({
       email: req.body.email,
     });
@@ -102,7 +102,7 @@ route.post("/free-registration", async (req, res) => {
 
 route.post("/registration-form", async (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     const registrationFormExists = await ApplicationForm.findOne({
       registrationnumber: req.body.registrationnumber,
     });
@@ -130,7 +130,7 @@ route.post("/registration-form", async (req, res) => {
 
 route.post("/get-registration-form", async (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     const registrationFormExists = await ApplicationForm.find({
       registrationnumber: req.body.registrationNo,
     });
@@ -167,7 +167,7 @@ route.post("/get-registration-form", async (req, res) => {
 
 route.post("/get-history-data", async (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     
     
     const y = await ApplicationForm.find({
@@ -190,7 +190,7 @@ route.post("/get-history-data", async (req, res) => {
 // Interested In Discussing Route
 route.post("/discussing", async (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     const discussionExists = await Discussion.findOne({
       email: req.body.email,
     });
@@ -224,7 +224,7 @@ route.post("/login", async (req, res) => {
         message: "Student not found!",
       });
     }
-    console.log(req.body)
+    // console.log(req.body)
 
     if (req.body.dateofbirth !== student.dateofbirth) {
       return res.send({
