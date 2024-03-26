@@ -9,6 +9,8 @@ const Discussion = require("../models/discussionModel");
 const multer = require("multer");
 const route = express.Router();
 
+var tempFile = "";
+
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/");
@@ -17,7 +19,7 @@ const multerStorage = multer.diskStorage({
     // const uniqueSuffix = Date.now();
     const ext = file.mimetype.split("/")[1];
     // cb(null, uniqueSuffix+file.originalname);
-    cb(null, `files-admin-${Date.now()}.jpg`);
+    return cb(null, `files-admin-${Date.now()}.jpg`);
   },
 });
 
@@ -35,6 +37,43 @@ const upload = multer({
 });
 
 // const upload = multer({ dest: "./public/" })
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    return cb(null, "./public")
+  },
+  filename: function (req, file, cb) {
+    //return cb(null, `${Date.now()}_${file.originalname}`)
+    return cb(null, `${file.originalname}`)
+  }
+})
+
+const upload1 = multer({ storage })
+
+
+
+
+
+route.post('/upload', upload1.single('studentProfile'), async (req, res) => {
+  console.log(req.body);
+  console.log("---->>>>> ", req.file);
+  try {
+    tempFile = req.file.filename;
+    console.log("---->>>>>Filename ", tempFile);
+    // console.log(req.body);
+    // const student = new ApplicationForm(req.body);
+    // await student.save();
+
+    //await ApplicationForm.create({ studentProfile: imageName })
+    //console.log("====>>> SUCESS");
+  } catch (error) {
+    console.log("====>>> ERROR", error.message);
+  }
+
+})
+
+
+
 
 route.post("/register", upload.single("myFile"), async (req, res) => {
   // console.log(req.body)
@@ -102,10 +141,13 @@ route.post("/free-registration", async (req, res) => {
 
 route.post("/registration-form", async (req, res) => {
   try {
-    // console.log(req.body)
     const registrationFormExists = await ApplicationForm.findOne({
       registrationnumber: req.body.registrationnumber,
     });
+
+    req.body.studentProfile = tempFile;
+    console.log("---->>>>>Filename Data:  ", req.body.studentProfile);
+
     if (registrationFormExists) {
       return res.send({
         success: false,
@@ -168,8 +210,8 @@ route.post("/get-registration-form", async (req, res) => {
 route.post("/get-history-data", async (req, res) => {
   try {
     // console.log(req.body)
-    
-    
+
+
     const y = await ApplicationForm.find({
       mobilenumber: req.body.contactnumber,
     });
