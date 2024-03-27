@@ -56,10 +56,8 @@ const upload1 = multer({ storage })
 
 route.post('/upload', upload1.single('studentProfile'), async (req, res) => {
   console.log(req.body);
-  console.log("---->>>>> ", req.file);
   try {
     tempFile = req.file.filename;
-    console.log("---->>>>>Filename ", tempFile);
     // console.log(req.body);
     // const student = new ApplicationForm(req.body);
     // await student.save();
