@@ -55,10 +55,9 @@ const upload1 = multer({ storage })
 
 
 route.post('/upload', upload1.single('studentProfile'), async (req, res) => {
-  console.log(req.body);
   try {
     tempFile = req.file.filename;
-    // console.log(req.body);
+    
     // const student = new ApplicationForm(req.body);
     // await student.save();
 
@@ -92,7 +91,7 @@ route.post("/register", upload.single("myFile"), async (req, res) => {
     const student = new Student(req.body);
     await student.save();
 
-    // console.log("hello")
+    console.log("======>>>>>  ", req.body)
 
     const stud = await Student.findOne({ email: req.body.email });
 
@@ -201,9 +200,6 @@ route.post("/get-registration-form", async (req, res) => {
     });
   }
 });
-
-
-
 
 route.post("/get-history-data", async (req, res) => {
   try {
