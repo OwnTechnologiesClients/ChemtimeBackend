@@ -13,7 +13,11 @@ exports.update = async (id, updateData) => {
 exports.findAll = async () => {
   return await Post.find(); 
 };
-
+exports.getThreeBlogs = async () => {
+  return await Post.find()
+  .limit(3)
+  .select('title category date');
+};
 
 exports.findById = async (id) => {
   return await Post.findById(id);

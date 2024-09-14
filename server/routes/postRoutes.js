@@ -4,6 +4,7 @@ const postController = require('../controller/postController')
 
 router.post('/', postController.createPost)
 
+router.get('/three-blogs', postController.getThreeBlogs);
 router.put('/:id', postController.updatePost)
 
 router.get('/', postController.getAllPosts)

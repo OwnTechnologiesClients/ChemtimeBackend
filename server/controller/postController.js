@@ -27,6 +27,14 @@ exports.getAllPosts = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+exports.getThreeBlogs = async (req, res) => {
+  try {
+    const blogs = await postService.getThreeBlogs();
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 exports.getPostById = async (req, res) => {
   try {
     const post = await postService.findById(req.params.id);
