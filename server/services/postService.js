@@ -15,8 +15,8 @@ exports.findAll = async () => {
 };
 exports.getThreeBlogs = async () => {
   return await Post.find()
-  .limit(3)
-  .select('title category date');
+  .limit(6)
+  .select('title category date image ');
 };
 
 exports.findById = async (id) => {
@@ -33,5 +33,16 @@ exports.getTopBlogsByCategory = async (category) => {
       .select('title _id'); // Select only title and _id
   } catch (error) {
     throw new Error('Error retrieving top blogs by category: ' + error.message);
+  }
+};
+exports.searchPostsByTitle = async (title) => {
+  try {
+    // Use a case-insensitive search with regex
+    const posts = await Post.find({
+      title: { $regex: new RegExp(title, 'i') }
+    });
+    return posts;
+  } catch (error) {
+    throw new Error('Error fetching posts: ' + error.message);
   }
 };
