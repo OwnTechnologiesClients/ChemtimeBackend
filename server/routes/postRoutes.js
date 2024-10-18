@@ -12,4 +12,5 @@ router.get('/', postController.getAllPosts)
 router.get('/:id', postController.getPostById)
 router.delete('/:id', postController.deletePost)
 router.get('/top-blogs/:category', postController.getTopBlogsByCategory)
+router.get('/category/:category', postController.getPostsByCategory);
 module.exports = router

@@ -81,3 +81,13 @@ exports.searchPosts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.getPostsByCategory = async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const posts = await postService.getPostsByCategory(category);
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
