@@ -15,6 +15,11 @@ const scholarshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   link: {
     type: String,
     required: true,
