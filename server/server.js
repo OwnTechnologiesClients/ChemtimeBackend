@@ -9,6 +9,7 @@ const postRoutes =require("./routes/postRoutes")
 const categoryRoutes =require("./routes/categoryRoutes")
 const adRoutes =require("./routes/AdRoute")
 const bodyParser = require("body-parser");
+const path = require('path');
 const app = express();
 
 // Allow cross-origin-policy
@@ -16,6 +17,7 @@ app.use(cors());
 
 //Get req.body in JSON format
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Confidentail Info
 dotenv.config({ path: "./server/config.env" });
