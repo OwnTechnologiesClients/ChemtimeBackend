@@ -8,6 +8,7 @@ const adminRoute = require("./routes/adminRoute");
 const postRoutes =require("./routes/postRoutes")
 const categoryRoutes =require("./routes/categoryRoutes")
 const adRoutes =require("./routes/AdRoute")
+const ScholarshipRoute =require("./routes/scholarshipRoute")
 const bodyParser = require("body-parser");
 const path = require('path');
 const app = express();
@@ -47,6 +48,7 @@ app.use("/api/admin", adminRoute);
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/ads', adRoutes);
+app.use('/api/scholarship', ScholarshipRoute);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

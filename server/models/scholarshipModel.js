@@ -11,10 +11,7 @@ const scholarshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  eligibility: {
-    type: String,
-    required: true,
-  },
+ 
   category: {
     type: String,
     required: true,
@@ -24,10 +21,7 @@ const scholarshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  deadline: {
-    type: Date,
-    required: true,
-  },
+ 
 });
 
 // Create the model from the schema

@@ -4,16 +4,14 @@ const router = express.Router();
 
 // Create a new scholarship
 router.post('/create', async (req, res) => {
-  const { title, description, eligibility, category, link, deadline } = req.body;
+  const { title, description, category, link } = req.body;
 
   try {
     const newScholarship = new Scholarship({
       title,
       description,
-      eligibility,
       category,
       link,
-      deadline,
     });
 
     await newScholarship.save();
@@ -25,7 +23,7 @@ router.post('/create', async (req, res) => {
 });
 
 // Retrieve all scholarships
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
     const scholarships = await Scholarship.find();
     res.status(200).json(scholarships);
@@ -55,29 +53,28 @@ router.get('/:id', async (req, res) => {
 
 // Update a scholarship by ID
 router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { title, description, eligibility, category, link, deadline } = req.body;
-
-  try {
-    const updatedScholarship = await Scholarship.findByIdAndUpdate(id, {
-      title,
-      description,
-      eligibility,
-      category,
-      link,
-      deadline,
-    }, { new: true }); // Return the updated document
-
-    if (!updatedScholarship) {
-      return res.status(404).json({ message: 'Scholarship not found' });
+    const { id } = req.params;
+    const { title, description, category, link } = req.body;
+  console.log(title, description, category, link )
+    try {
+      const updatedScholarship = await Scholarship.findByIdAndUpdate(id, {
+        title,
+        description,
+        category,
+        link,
+      }, { new: true }); // Return the updated document
+  
+  // console.log(updatedScholarship)
+      if (!updatedScholarship) {
+        return res.status(404).json({ message: 'Scholarship not found' });
+      }
+  
+      res.status(200).json({ message: 'Scholarship updated successfully!', scholarship: updatedScholarship });
+    } catch (error) {
+      console.error('Error updating scholarship:', error);
+      res.status(400).json({ message: 'Failed to update scholarship', error: error.message });
     }
-
-    res.status(200).json({ message: 'Scholarship updated successfully!', scholarship: updatedScholarship });
-  } catch (error) {
-    console.error('Error updating scholarship:', error);
-    res.status(400).json({ message: 'Failed to update scholarship', error: error.message });
-  }
-});
+  });
 
 // Delete a scholarship by ID
 router.delete('/:id', async (req, res) => {
