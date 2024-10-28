@@ -9,7 +9,17 @@ const createCategory = async (name) => {
   return await newCategory.save();
 };
 
+const updateCategory = async (id, name) => {
+  return await Category.findByIdAndUpdate(id, { name }, { new: true, runValidators: true });
+};
+
+const deleteCategory = async (id) => {
+  return await Category.findByIdAndDelete(id);
+};
+
 module.exports = {
   getAllCategories,
   createCategory,
+  updateCategory,
+  deleteCategory,
 };
