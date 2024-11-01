@@ -14,7 +14,7 @@ const path = require('path');
 const app = express();
 
 // Allow cross-origin-policy
-app.use(cors());
+// app.use(cors());
 
 //Get req.body in JSON format
 app.use(express.json());
