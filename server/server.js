@@ -5,10 +5,10 @@ const connectionDB = require("./config/dbConnection");
 const userRoute = require("./routes/userRoute");
 const razorRoute = require("./routes/razorpayRoute");
 const adminRoute = require("./routes/adminRoute");
-const postRoutes =require("./routes/postRoutes")
-const categoryRoutes =require("./routes/categoryRoutes")
-const adRoutes =require("./routes/AdRoute")
-const ScholarshipRoute =require("./routes/scholarshipRoute")
+const postRoutes = require("./routes/postRoutes")
+const categoryRoutes = require("./routes/categoryRoutes")
+const adRoutes = require("./routes/AdRoute")
+const ScholarshipRoute = require("./routes/scholarshipRoute")
 const bodyParser = require("body-parser");
 const path = require('path');
 const app = express();
@@ -28,12 +28,16 @@ const PORT = process.env.PORT || 8000;
 // Database connection
 connectionDB();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type");
+//   next();
+// });
+
+app.use(cors({
+  origin: '*',  // Replace with your frontend's URL
+}));
 
 app.use(express.json({ limit: '150mb' }));
 app.use(express.urlencoded({ limit: '150mb', extended: true }));
