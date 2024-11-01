@@ -46,3 +46,11 @@ exports.searchPostsByTitle = async (title) => {
     throw new Error('Error fetching posts: ' + error.message);
   }
 };
+exports.getPostsByCategory = async (category) => {
+  try {
+    const posts = await Post.find({ category }); // Assuming category is a string
+    return posts;
+  } catch (error) {
+    throw new Error('Error retrieving posts by category: ' + error.message);
+  }
+};
