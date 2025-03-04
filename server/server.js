@@ -10,6 +10,11 @@ const categoryRoutes = require("./routes/categoryRoutes")
 const adRoutes = require("./routes/AdRoute")
 const ScholarshipRoute = require("./routes/scholarshipRoute")
 const bodyParser = require("body-parser");
+const bookRoute = require("./routes/AddBook");
+const addCategoryRouter = require("./routes/AddCategory");
+const faq = require("./routes/AddFaq");
+const addStudyMaterialRouter = require("./routes/AddStudyMaterial");
+const banner = require("./routes/Banner");
 const path = require('path');
 const app = express();
 
@@ -53,6 +58,15 @@ app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/ads', adRoutes);
 app.use('/api/scholarship', ScholarshipRoute);
+
+//StudyMaterials
+app.use("/api/studyMaterials",bookRoute);
+app.use("/api/studyMaterials", addCategoryRouter);
+app.use("/api/studyMaterials", faq);
+app.use("/api/studyMaterials", addStudyMaterialRouter);
+app.use("/api/studyMaterials", banner);
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
