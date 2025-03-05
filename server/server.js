@@ -15,6 +15,7 @@ const addCategoryRouter = require("./routes/AddCategory");
 const faq = require("./routes/AddFaq");
 const addStudyMaterialRouter = require("./routes/AddStudyMaterial");
 const banner = require("./routes/Banner");
+const address = require("./routes/address")
 const path = require('path');
 const app = express();
 
@@ -65,6 +66,7 @@ app.use("/api/studyMaterials", addCategoryRouter);
 app.use("/api/studyMaterials", faq);
 app.use("/api/studyMaterials", addStudyMaterialRouter);
 app.use("/api/studyMaterials", banner);
+app.use("/api/studyMaterials",address)
 
 
 app.listen(PORT, () => {

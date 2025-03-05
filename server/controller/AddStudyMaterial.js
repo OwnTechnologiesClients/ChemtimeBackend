@@ -125,7 +125,6 @@ const getAllStudyMaterial = async (req, res) => {
   }
 };
 
-
 const updateStudyMaterial = async (req, res) => {
   try {
     console.log("Request Body:", req.body);
@@ -178,23 +177,6 @@ const updateStudyMaterial = async (req, res) => {
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const deleteStudyMaterial = async (req, res) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
