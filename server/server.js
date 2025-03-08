@@ -16,6 +16,9 @@ const faq = require("./routes/AddFaq");
 const addStudyMaterialRouter = require("./routes/AddStudyMaterial");
 const banner = require("./routes/Banner");
 const address = require("./routes/address")
+const examRoute = require("./routes/AddNewExam");
+const branchRoute = require("./routes/AddNewBranch");
+const getbranchRoute = require("./routes/AddQues&Answ")
 const path = require('path');
 const app = express();
 
@@ -67,6 +70,12 @@ app.use("/api/studyMaterials", faq);
 app.use("/api/studyMaterials", addStudyMaterialRouter);
 app.use("/api/studyMaterials", banner);
 app.use("/api/studyMaterials",address)
+
+//Exams
+app.use("/addnewexam", examRoute);
+app.use("/addnewbranch", branchRoute);
+app.use("/getBranchExam", getbranchRoute);
+app.use("/getQuesAndAnsw", getbranchRoute);
 
 
 app.listen(PORT, () => {
