@@ -1,5 +1,5 @@
 const express = require("express");
-const {addStudyMaterial, getAllStudyMaterial, deleteStudyMaterial, updateStudyMaterial} = require("../controller/AddStudyMaterial.js");
+const {addStudyMaterial, getAllStudyMaterial, updateStudyMaterial} = require("../controller/AddStudyMaterial.js");
 
 const upload = require("../middleware/upload.js");
 
@@ -8,6 +8,6 @@ const router = express.Router();
 router.post("/study-material", upload.array("images", 5), addStudyMaterial);
 router.get("/get-all-study-materials", getAllStudyMaterial);
 router.put("/update-study-material", updateStudyMaterial);
-router.delete("/delete-study-material/:id", deleteStudyMaterial);
+
 
 module.exports = router;

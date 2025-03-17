@@ -19,6 +19,7 @@ const address = require("./routes/address")
 const examRoute = require("./routes/AddNewExam");
 const branchRoute = require("./routes/AddNewBranch");
 const getbranchRoute = require("./routes/AddQues&Answ")
+const offersCoupons = require("./routes/OffersCoupons");
 const path = require('path');
 const app = express();
 
@@ -69,7 +70,8 @@ app.use("/api/studyMaterials", addCategoryRouter);
 app.use("/api/studyMaterials", faq);
 app.use("/api/studyMaterials", addStudyMaterialRouter);
 app.use("/api/studyMaterials", banner);
-app.use("/api/studyMaterials",address)
+app.use("/api/studyMaterials",address);
+app.use("/api/studyMaterials",offersCoupons);
 
 //Exams
 app.use("/addnewexam", examRoute);

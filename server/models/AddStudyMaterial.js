@@ -2,11 +2,19 @@ const mongoose = require("mongoose");
 
 // Schema for study materials inside a category
 const studyMaterialItemSchema = new mongoose.Schema({
-  bookTitle: { type: String, required: true }, // Title of the book
-  amount: { type: Number, required: true }, // Price of the book
-  discountAmount: { type: Number, default: 0 }, // Discounted price
-  bookDescription: { type: String, required: true }, // Short description
-  productDetails: { type: String, required: true }, // Detailed specifications
+  bookTitle: { type: String, required: true },
+  amount: { type: Number, required: true },
+  discountAmount: { type: Number, default: 0 },
+  discountAmountByPercentage: { type: Number, default: 0 },
+  stock: { type: String },
+  bookDescription: { type: String, required: true },
+  bookStructure: { type: String, required: true },
+  howbookhelpyou: { type: String, required: true },
+  productDetails: { type: String, required: true },
+  rating: { type: Number, default: 0 },
+  quantitySelector: { type: [String], required: true },
+  languages: { type: [String], required: true },
+  pincode: { type: Number, default: "123456" },
   images: { type: [String], default: [] }, // Array of image URLs
 });
 
@@ -17,12 +25,14 @@ const categorySchema = new mongoose.Schema({
 });
 
 // Schema for books containing categories
-const bookSchema = new mongoose.Schema({
-  bookId: { type: String, required: true, unique: true },
-  bookName: { type: String, required: true },
-  categories: [categorySchema], // List of categories under a book
-}, { timestamps: true });
-
+const bookSchema = new mongoose.Schema(
+  {
+    bookId: { type: String, required: true, unique: true },
+    bookName: { type: String, required: true },
+    categories: [categorySchema], // List of categories under a book
+  },
+  { timestamps: true }
+);
 
 const StudyMaterial = mongoose.model("StudyMaterial", bookSchema);
 

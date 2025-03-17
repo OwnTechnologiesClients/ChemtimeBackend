@@ -6,8 +6,14 @@ const addCategory = async (req, res) => {
     const { category, bookId, bookName} = req.body; // Get bookId from request body
 
     if (!category || !bookId || !bookName) {
-      return res.status(400).json({ message: "Both category and bookId are required" });
+      return res.status(400).json({ message: "Category, bookId, and bookName are required" });
     }
+
+     // Check if category already exists
+     const existingCategory = await Category.findOne({ category });
+     if (existingCategory) {
+       return res.status(400).json({ message: "Category already exists" });
+     }
 
     const categoryData = new Category({ category, bookId, bookName});
     await categoryData.save();
@@ -21,8 +27,7 @@ const addCategory = async (req, res) => {
 const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
-    console.log("Categories retrieved successfully", categories);
-    
+  
     res.status(200).json({ message: "Categories retrieved successfully", categories });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error: error.message });

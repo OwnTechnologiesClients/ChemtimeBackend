@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const addCategorySchema = new mongoose.Schema(
@@ -6,6 +5,8 @@ const addCategorySchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      unique: true,
+      trim: true,
     },
     bookId: {
       type: String,
