@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const AddressSchema = new mongoose.Schema({
+const addressSchema = new mongoose.Schema({
   name: { type: String, required: true },
   mobileNumber: { type: String, required: true },
   alternateMobileNumber: { type: String },
@@ -12,7 +12,16 @@ const AddressSchema = new mongoose.Schema({
   city: { type: String },
   state: { type: String },
   isDefault: { type: Boolean, default: false },
+}, { timestamps: true });
+
+const userSchema = new mongoose.Schema({
+  name: { type: String,  },
+  phoneNumber: { type: String,  },
+  gender: { type: String,  },
+  email: { type: String,  },
+  addresses: [addressSchema],   // Array of addresses
+  createdAt: { type: Date, default: Date.now }
 });
 
-const Address = mongoose.model("address", AddressSchema);
-module.exports = Address;
+const User = mongoose.model("User", userSchema);
+module.exports = User;
