@@ -15,7 +15,8 @@ const addressSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const cartItemSchema = new mongoose.Schema({
-  cartItem: { type: String, required: true },
+  image: { type: String, },
+  itemName: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, default: 1 },
   total: { type: Number }

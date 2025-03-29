@@ -3,23 +3,26 @@ const User = require("../models/User");
 // ✅ Add to Cart
 const addToCart = async (req, res) => {
   try {
-    const { cartItem, price, quantity } = req.body;
-    const userId = req.user.id;  // Extract user ID from JWT
+    const { image, itemName, price, quantity } = req.body;
+    const userId = req.user.id; // Extract user ID from JWT
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     // ✅ Check if product is already in the cart
-    const existingItem = user.cart.find((item) => item.cartItem === cartItem);
+    const existingItem = user.cart.find((item) => item.itemName === itemName);
 
     if (existingItem) {
       existingItem.quantity += quantity;
       existingItem.total = existingItem.quantity * existingItem.price;
     } else {
       user.cart.push({
-        cartItem,
+        image,
+        itemName,
         price,
         quantity,
         total: price * quantity,
@@ -42,18 +45,21 @@ const addToCart = async (req, res) => {
 // ✅ Buy Now
 const buyNow = async (req, res) => {
   try {
-    const { cartItem, price, quantity } = req.body;
+    const { image, itemName, price, quantity } = req.body;
     const userId = req.user.id;
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     // ✅ Clear previous `buynow` and add current item
     user.buynow = [
       {
-        cartItem,
+        image,
+        itemName,
         price,
         quantity,
         total: price * quantity,
@@ -80,7 +86,9 @@ const getCart = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     res.status(200).json({
@@ -96,14 +104,19 @@ const getCart = async (req, res) => {
 // ✅ Clear Cart
 const clearCart = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.id; // Get user ID from token
+    const { itemId } = req.params;
+
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
-    user.cart = [];  // ✅ Clear the cart
+    // ✅ Filter out the item with the given ID
+    user.cart = user.cart.filter((item) => item._id.toString() !== itemId);
     await user.save();
 
     res.status(200).json({
