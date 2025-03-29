@@ -14,14 +14,27 @@ const addressSchema = new mongoose.Schema({
   isDefault: { type: Boolean, default: false },
 }, { timestamps: true });
 
+const cartItemSchema = new mongoose.Schema({
+  cartItem: { type: String, required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, default: 1 },
+  total: { type: Number }
+});
+
 const userSchema = new mongoose.Schema({
   name: { type: String,  },
   phoneNumber: { type: String,  },
   gender: { type: String,  },
   email: { type: String,  },
   addresses: [addressSchema],   // Array of addresses
+  cart: [cartItemSchema],     // ✅ Array for cart items
+  buynow: [cartItemSchema],   // ✅ Array for buy now items
   createdAt: { type: Date, default: Date.now }
 });
+
+
+
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

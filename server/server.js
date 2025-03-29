@@ -21,6 +21,7 @@ const branchRoute = require("./routes/AddNewBranch");
 const getbranchRoute = require("./routes/AddQues&Answ")
 const offersCoupons = require("./routes/OffersCoupons");
 const otpRoutes = require("./routes/Otp");
+const cartRoutes = require("./routes/Cart")
 const path = require('path');
 const app = express();
 
@@ -58,7 +59,6 @@ app.use("/api/student", userRoute);
 app.use("/api/payment", razorRoute);
 app.use("/api/admin", adminRoute);
 
-
 //New Routes
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
@@ -73,8 +73,11 @@ app.use("/api/studyMaterials", addStudyMaterialRouter);
 app.use("/api/studyMaterials", banner);
 app.use("/api/studyMaterials",address);
 app.use("/api/studyMaterials",offersCoupons);
+
 //OTP
 app.use("/api", otpRoutes);
+//cart
+app.use("/api/cart", cartRoutes)
 
 //Exams
 app.use("/addnewexam", examRoute);

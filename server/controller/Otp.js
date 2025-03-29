@@ -1,9 +1,10 @@
 const OTP = require("../models/otpModle");
-const User = require("../models/User"); 
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 const generateOTP = async (req, res) => {
   try {
-    const { phoneNumber, name, agree } = req.body;
+    const { phoneNumber, name, termsandconditions } = req.body;
 
     if (!phoneNumber || !/^\+91[0-9]{10}$/.test(phoneNumber)) {
       return res.status(400).json({
@@ -26,11 +27,9 @@ const generateOTP = async (req, res) => {
       phoneNumber,
       otp,
       name,
-      agree,
+      termsandconditions,
       expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes expiration
     });
-
-    console.log(`OTP: ${otp} sent to ${phoneNumber}`);
 
     // ✅ Send response back
     return res.status(200).json({
@@ -39,7 +38,7 @@ const generateOTP = async (req, res) => {
       phoneNumber,
       otp,
       name,
-      agree,
+      termsandconditions,
       otpId: otpRecord._id,
     });
   } catch (error) {
@@ -100,12 +99,19 @@ const verifyOTP = async (req, res) => {
       await user.save();
     }
 
+    const token = jwt.sign(
+      { userId: user._id, phoneNumber: user.phoneNumber },
+      process.env.JWT_SECRET_KEY || "MyBackend",
+      { expiresIn: "1d" }
+    );
+
     // Delete OTP after successful verification
     await OTP.deleteOne({ phoneNumber });
 
     res.status(200).json({
       success: true,
       message: "OTP verified successfully and user saved",
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -125,12 +131,12 @@ const verifyOTP = async (req, res) => {
   }
 };
 
+// ✅ Get Profile of Authenticated User
 const getProfile = async (req, res) => {
   try {
-    const { phoneNumber } = req.params;
+    const userId = req.user.userId; // Extract user ID from token
 
-    // Fetch user by phoneNumber
-    const user = await User.findOne({ phoneNumber });
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({
@@ -146,11 +152,13 @@ const getProfile = async (req, res) => {
         id: user._id,
         name: user.name,
         phoneNumber: user.phoneNumber,
+        gender: user.gender || "",
+        email: user.email || "",
+        addresses: user.addresses || [],
       },
     });
   } catch (error) {
     console.error("Error fetching profile:", error.message);
-
     res.status(500).json({
       success: false,
       message: "Failed to fetch profile",
@@ -161,11 +169,10 @@ const getProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
   try {
-    const { id } = req.params; // Get user ID from params
-    const { name, phoneNumber, gender, email } = req.body;
+    const userId = req.user.userId; // Extract user ID from token
+    const { name, phoneNumber, gender, email, addresses } = req.body;
 
-    // Find the user by ID
-    let user = await User.findById(id);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({
@@ -174,13 +181,15 @@ const updateUserProfile = async (req, res) => {
       });
     }
 
-    // Update the fields
+    // Update user fields
     user.name = name || user.name;
     user.phoneNumber = phoneNumber || user.phoneNumber;
     user.gender = gender || user.gender;
     user.email = email || user.email;
+    if (addresses) {
+      user.addresses = addresses;
+    }
 
-    // Save the updated profile
     await user.save();
 
     res.status(200).json({
