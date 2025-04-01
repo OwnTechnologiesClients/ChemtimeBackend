@@ -2,8 +2,8 @@ const Offer = require("../models/OffersCoupons");
 
 const addOffer = async (req, res) => {
     try {
-      const { title, coupons } = req.body;
-      const newOffer = new Offer({ title, coupons });
+      const { title, coupons, amount } = req.body;
+      const newOffer = new Offer({ title, coupons,amount });
       await newOffer.save();
       res.status(201).json({ message: "Offer added successfully" });
     } catch (error) {
@@ -23,7 +23,7 @@ const addOffer = async (req, res) => {
 
   const updateOffer = async (req, res) => {
     try {
-      const { title, coupons } = req.body;
+      const { title, coupons,amount } = req.body;
       const existingOffer = await Offer.findOne(); // Fetch the first offer entry
   
       if (!existingOffer) {
@@ -36,6 +36,8 @@ const addOffer = async (req, res) => {
       // Update the existing offer record
       existingOffer.title = title;
       existingOffer.coupons = coupons;
+      existingOffer.amount = amount
+
   
       const updatedOffer = await existingOffer.save();
   

@@ -3,7 +3,7 @@ const User = require("../models/User");
 // ✅ Add to Cart
 const addToCart = async (req, res) => {
   try {
-    const { image, itemName, price, quantity } = req.body;
+    const { image, itemName, price, quantity, discountAmount, discountPercentage } = req.body;
     const userId = req.user.id; // Extract user ID from JWT
 
     const user = await User.findById(userId);
@@ -19,6 +19,10 @@ const addToCart = async (req, res) => {
     if (existingItem) {
       existingItem.quantity += quantity;
       existingItem.total = existingItem.quantity * existingItem.price;
+
+      // ✅ Update discount fields if provided
+      existingItem.discountAmount = discountAmount || existingItem.discountAmount;
+      existingItem.discountPercentage = discountPercentage || existingItem.discountPercentage;
     } else {
       user.cart.push({
         image,
@@ -26,6 +30,8 @@ const addToCart = async (req, res) => {
         price,
         quantity,
         total: price * quantity,
+        discountAmount,         
+        discountPercentage 
       });
     }
 

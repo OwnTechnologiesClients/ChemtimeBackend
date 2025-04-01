@@ -18,6 +18,8 @@ const cartItemSchema = new mongoose.Schema({
   image: { type: String, },
   itemName: { type: String, required: true },
   price: { type: Number, required: true },
+  discountAmount: { type: Number, default: 0 },        
+  discountPercentage: { type: Number, default: 0 } ,
   quantity: { type: Number, default: 1 },
   total: { type: Number }
 });
