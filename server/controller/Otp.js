@@ -30,6 +30,7 @@ const generateOTP = async (req, res) => {
       termsandconditions,
       expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes expiration
     });
+    console.log("====>>> OTP  ", otp);
 
     // ✅ Send response back
     return res.status(200).json({

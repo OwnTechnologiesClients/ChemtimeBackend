@@ -8,9 +8,9 @@ const addBanner = async (req, res) => {
     }
 
     // Save multiple image paths
-    // const bannerImage = req.files.map((file) => `/${file.filename}`);
-    const bannerImage = req.files.map((file) => `/uploads/${file.filename}`)
-    
+    const bannerImage = req.files.map((file) => `/${file.filename}`);
+    //const bannerImage = req.files.map((file) => `/uploads/${file.filename}`)
+
     const banner = new Banners({ bannerImage });
     const savedBanner = await banner.save();
 

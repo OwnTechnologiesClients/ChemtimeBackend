@@ -20,8 +20,8 @@ const addStudyMaterial = async (req, res) => {
       quantitySelector,
       languages,
     } = req.body;
-    console.log("discAmountByPercentage",discountAmountByPercentage)
-    
+    console.log("discAmountByPercentage", discountAmountByPercentage)
+
     // Ensure bookId exists
     if (!bookId || !bookName) {
       return res.status(400).json({
@@ -31,7 +31,10 @@ const addStudyMaterial = async (req, res) => {
     }
 
     // Extract image file paths from multer
-    const images = req.files ? req.files.map((file) => file.path) : [];
+    const images = req.files ? req.files.map((file) => file.filename) : [];
+
+    console.log("====>>>><<IMAGE  ", images);
+
 
     // Find if the book already exists using bookId
     let book = await StudyMaterial.findOne({ bookId });

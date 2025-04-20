@@ -2,27 +2,22 @@ const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
 
-// Set upload directory
-const uploadDir = path.join(__dirname, "uploads"); // ✅ Absolute path
+// ✅ Go up one level from middleware to the root uploads folder
+const uploadDir = path.join(__dirname, "..", "uploads");
 
-// Ensure the directory exists
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Configure storage settings
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadDir); // Save files in 'public/uploads/' folder
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`); // Append timestamp to avoid overwriting
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-// Initialize multer for multiple file uploads
-const upload = multer({
-  storage: storage,
-});
+const upload = multer({ storage });
 
 module.exports = upload;
