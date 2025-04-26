@@ -5,16 +5,28 @@ const connectionDB = require("./config/dbConnection");
 const userRoute = require("./routes/userRoute");
 const razorRoute = require("./routes/razorpayRoute");
 const adminRoute = require("./routes/adminRoute");
-const postRoutes =require("./routes/postRoutes")
-const categoryRoutes =require("./routes/categoryRoutes")
-const adRoutes =require("./routes/AdRoute")
-const ScholarshipRoute =require("./routes/scholarshipRoute")
+const postRoutes = require("./routes/postRoutes")
+const categoryRoutes = require("./routes/categoryRoutes")
+const adRoutes = require("./routes/AdRoute")
+const ScholarshipRoute = require("./routes/scholarshipRoute")
 const bodyParser = require("body-parser");
+const bookRoute = require("./routes/AddBook");
+const addCategoryRouter = require("./routes/AddCategory");
+const faq = require("./routes/AddFaq");
+const addStudyMaterialRouter = require("./routes/AddStudyMaterial");
+const banner = require("./routes/Banner");
+const address = require("./routes/address")
+const examRoute = require("./routes/AddNewExam");
+const branchRoute = require("./routes/AddNewBranch");
+const getbranchRoute = require("./routes/AddQues&Answ")
+const offersCoupons = require("./routes/OffersCoupons");
+const otpRoutes = require("./routes/Otp");
+const cartRoutes = require("./routes/Cart")
 const path = require('path');
 const app = express();
 
 // Allow cross-origin-policy
-app.use(cors());
+// app.use(cors());
 
 //Get req.body in JSON format
 app.use(express.json());
@@ -35,6 +47,10 @@ connectionDB();
 //   next();
 // });
 
+app.use(cors({
+  origin: '*',  // Replace with your frontend's URL
+}));
+
 app.use(express.json({ limit: '150mb' }));
 app.use(express.urlencoded({ limit: '150mb', extended: true }));
 
@@ -43,12 +59,33 @@ app.use("/api/student", userRoute);
 app.use("/api/payment", razorRoute);
 app.use("/api/admin", adminRoute);
 
-
 //New Routes
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/ads', adRoutes);
 app.use('/api/scholarship', ScholarshipRoute);
+
+//StudyMaterials
+app.use("/api/studyMaterials",bookRoute);
+app.use("/api/studyMaterials", addCategoryRouter);
+app.use("/api/studyMaterials", faq);
+app.use("/api/studyMaterials", addStudyMaterialRouter);
+app.use("/api/studyMaterials", banner);
+app.use("/api/studyMaterials",address);
+app.use("/api/studyMaterials",offersCoupons);
+
+//OTP
+app.use("/api", otpRoutes);
+//cart
+app.use("/api/cart", cartRoutes)
+
+//Exams
+app.use("/addnewexam", examRoute);
+app.use("/addnewbranch", branchRoute);
+app.use("/getBranchExam", getbranchRoute);
+app.use("/getQuesAndAnsw", getbranchRoute);
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
