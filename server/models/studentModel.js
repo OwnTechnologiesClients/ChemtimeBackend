@@ -31,7 +31,10 @@ const studentSchema = mongoose.Schema(
     state: {
       type: String,
       required: true,
+<<<<<<< HEAD
 
+=======
+>>>>>>> 027508f69b19abd0a0e74a860c8eb530b571889e
     },
     pincode: {
       type: String,
@@ -51,4 +54,8 @@ const studentSchema = mongoose.Schema(
   }
 );
 
+<<<<<<< HEAD
 module.exports = mongoose.model("studentworks", studentSchema);
+=======
+module.exports = mongoose.model("students", studentSchema);
+>>>>>>> 027508f69b19abd0a0e74a860c8eb530b571889e

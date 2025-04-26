@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 
 const registrationSchema = mongoose.Schema(
   {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 027508f69b19abd0a0e74a860c8eb530b571889e
     email: {
       type: String,
       required: true,
@@ -16,7 +19,14 @@ const registrationSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+<<<<<<< HEAD
     
+=======
+    dateofbirth: {
+      type: String,
+      required: true,
+    },
+>>>>>>> 027508f69b19abd0a0e74a860c8eb530b571889e
   },
   {
     timestamps: true,
