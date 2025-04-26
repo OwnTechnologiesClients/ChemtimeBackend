@@ -25,6 +25,9 @@ const cartRoutes = require("./routes/Cart")
 const path = require('path');
 const app = express();
 
+const paymentRoute = require("./routes/paymentRoute");
+
+
 // Allow cross-origin-policy
 // app.use(cors());
 
@@ -57,7 +60,9 @@ app.use(express.urlencoded({ limit: '150mb', extended: true }));
 // Routes
 app.use("/api/student", userRoute);
 app.use("/api/payment", razorRoute);
-app.use("/api/admin", adminRoute);
+// app.use("/api/admin", adminRoute);
+// app.use("/api/v1/phonepe", phonepeRoute);
+app.use("/api", paymentRoute);
 
 //New Routes
 app.use('/api/posts', postRoutes);
