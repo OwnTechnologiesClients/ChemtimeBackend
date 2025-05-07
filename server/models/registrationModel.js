@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const registrationSchema = mongoose.Schema(
   {
+    
     email: {
       type: String,
       required: true,
@@ -15,10 +16,7 @@ const registrationSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    dateofbirth: {
-      type: String,
-      required: true,
-    },
+    
   },
   {
     timestamps: true,
