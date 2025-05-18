@@ -54,6 +54,11 @@ app.use(cors({
   origin: '*',  // Replace with your frontend's URL
 }));
 
+// app.use(cors({
+//   origin: 'http://localhost:3000', // frontend
+//   exposedHeaders: ['x-rtb-fingerprint-id'],
+// }));
+
 app.use(express.json({ limit: '150mb' }));
 app.use(express.urlencoded({ limit: '150mb', extended: true }));
 
